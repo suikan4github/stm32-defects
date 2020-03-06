@@ -94,9 +94,9 @@ In the main routine, saved EXTI 13 ( interrupt of the Switch B1 ) interrupt conf
 ```
 
 #### Control program
-The project "d002-nucleo-g431rb-control" demonstrate expected behavior. This program save and restore the EXTI 13 as same as the demo project "d002-nucleo-f746-exti". This program works as expected. The LED2 toggles only when the switch B1 is pushed. 
+The project "d002-nucleo-g431rb-control" shows the expected behavior. This program saves and restores the EXTI 13 as same as the demo project "d002-nucleo-f746-exti" does. While the demo program fails, this control program works as expected. The LED2 toggles only when the switch B1 is pushed. 
 
-Run this program on Nucleo G431RB
+Run this program on Nucleo G431RB.
 
 ### D003 STM32G0 HAL_GPIO_EXTI_Callback() incompatibility
 ### D004 STM32H7 HAL_I2C_Master_Transmit_IT() runtime bug
