@@ -1,17 +1,12 @@
 # stm32-defects
 A list of the known STM32 HAL defects
-<!-- TOC -->
+<!-- TOC depthTo:3 -->
 
 - [stm32-defects](#stm32-defects)
     - [Preface](#preface)
     - [Defects](#defects)
         - [D001 Nucleo F722ZE wrong clock configuration](#d001-nucleo-f722ze-wrong-clock-configuration)
-            - [Description](#description)
         - [D002 STM32F7 HAL_EXTI_SetConfigLine() runtime bug](#d002-stm32f7-hal_exti_setconfigline-runtime-bug)
-            - [Description](#description-1)
-            - [How to reproduce](#how-to-reproduce)
-            - [Consideration](#consideration)
-            - [Control program](#control-program)
         - [D003 STM32G0 HAL_GPIO_EXTI_Callback() incompatibility](#d003-stm32g0-hal_gpio_exti_callback-incompatibility)
         - [D004 STM32H7 HAL_I2C_Master_Transmit_IT() runtime bug](#d004-stm32h7-hal_i2c_master_transmit_it-runtime-bug)
         - [D005 STM32L1 HAL_I2C_Master_Sequential_Transmit_IT() incompatibility](#d005-stm32l1-hal_i2c_master_sequential_transmit_it-incompatibility)
