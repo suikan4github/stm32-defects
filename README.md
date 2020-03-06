@@ -11,6 +11,7 @@ A list of the known STM32 HAL defects
             - [Description](#description-1)
             - [How to reproduce](#how-to-reproduce)
             - [Consideration](#consideration)
+            - [Control program](#control-program)
         - [D003 STM32G0 HAL_GPIO_EXTI_Callback() incompatibility](#d003-stm32g0-hal_gpio_exti_callback-incompatibility)
         - [D004 STM32H7 HAL_I2C_Master_Transmit_IT() runtime bug](#d004-stm32h7-hal_i2c_master_transmit_it-runtime-bug)
         - [D005 STM32L1 HAL_I2C_Master_Sequential_Transmit_IT() incompatibility](#d005-stm32l1-hal_i2c_master_sequential_transmit_it-incompatibility)
@@ -48,15 +49,16 @@ This seems to be the problem of the code generator, rather than the embedded fir
 ![Clock Configuration](img/2020-03-06_07-16.png)
 
 ### D002 STM32F7 HAL_EXTI_SetConfigLine() runtime bug
-| Item                    | Description           |
-| ----------------------- | --------------------- |
-| Affected device         | STM32F7               |
-| Last reproduced CubeIDE | -                     | 
-| Resolved CubeIDE        | -                     |
-| Last reproduced FW      | F7 v1.16.0            | 
-| Resolved FW             | -                     |
-| Sample program          | d002-nucleo-f746-exti |
-| Reported                | ST Community          |
+| Item                    | Description                |
+| ----------------------- | -------------------------- |
+| Affected device         | STM32F7                    |
+| Last reproduced CubeIDE | -                          | 
+| Resolved CubeIDE        | -                          |
+| Last reproduced FW      | F7 v1.16.0                 | 
+| Resolved FW             | -                          |
+| Demo program            | d002-nucleo-f746-exti      |
+| Control program         | d002-nucleo-g431rb-control |
+| Reported                | ST Community               |
 
 #### Description
 The HAL_EXTI_SetConfigLine() generates interrupt infinitely, after setting the retrieved configuration data. This is strange behavior. 
@@ -73,6 +75,31 @@ At the initial state, only LED2( Blue )is turned on. And both LED2 and LED3 ( Bl
 
 In the main routine, saved EXTI 13 ( interrupt of the Switch B1 ) interrupt configuration, reset it, and then, re-store the EXTI 13 configuration. This must just enabe the egdge trigger interrupt. In case of correct implementation, this program goggles LED2 and LED3 only when B1 is pushed. 
 
+```
+    HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET);
+
+    // Get the handle of the EXTI 13 ( B1 switch )
+    HAL_EXTI_GetHandle(&hexti_b1, EXTI_LINE_13);
+
+    // Save the configuration of the EXTI 13. This is set as  edge interrupt, by  initializer.
+    HAL_EXTI_GetConfigLine(
+                           &hexti_b1,
+                           &hexti_b1_config
+                           );
+
+    // Clear the EXTI 13. Interrupt is disabled.
+    HAL_EXTI_ClearConfigLine(&hexti_b1);
+
+    // Restore the EXTI13 configuration. Now, it should be  edge trigger.
+    HAL_EXTI_SetConfigLine(&hexti_b1, &hexti_b1_config);
+
+```
+
+#### Control program
+The project "d002-nucleo-g431rb-control" demonstrate expected behavior. This program save and restore the EXTI 13 as same as the demo project "d002-nucleo-f746-exti". This program works as expected. The LED2 toggles only when the switch B1 is pushed. 
+
+Run this program on Nucleo G431RB
 
 ### D003 STM32G0 HAL_GPIO_EXTI_Callback() incompatibility
 ### D004 STM32H7 HAL_I2C_Master_Transmit_IT() runtime bug
