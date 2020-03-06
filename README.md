@@ -32,7 +32,7 @@ This is a collection of the STM32 software bugs which is harmful to the developm
 | Resolved FW             | -             |
 | Demo program            | -             |
 | Control program         | -             |
-| Reported                | ST Community  |
+| Reported                | [ST Community](https://community.st.com/s/question/0D50X0000BfsFICSQ2/bug-report-cubemx-generated-stm32f722-code-gives-broken-character-on-uart-tx)  |
 
 #### Description
 In the CubeIDE output project, the default input clock frequency of the Nucleo F722ZE is wrong. It is configured as 25MHz, while it should be 8MHz. 
@@ -108,7 +108,7 @@ Run this program on Nucleo G431RB.
 | Resolved FW             | -                          |
 | Demo program            | d003-nucleo-g070-gpio-exti |
 | Control program         | d003-nucleo-g431rb-control |
-| Reported                | ST Community               |
+| Reported                | [ST Community](https://community.st.com/s/question/0D50X0000C6eVvdSQE/stm32g0-hal-exti-callback-implementation-is-buggy)               |
 
 #### Description
 The HAL_GPIO_EXTI_Callback() is not called while EXTI interrupt is accepted. 
@@ -140,6 +140,43 @@ The project "d003-nucleo-g431rb-control" shows the expected behavior. For each t
 Run this program on Nucleo G431RB.
 
 ### D004 STM32H7 HAL_I2C_Master_Transmit_IT() runtime bug
+| Item                    | Description                |
+| ----------------------- | -------------------------- |
+| Affected device         | STM32H7                    |
+| Last reproduced CubeIDE | -                          | 
+| Resolved CubeIDE        | -                          |
+| Last reproduced FW      | H7 v1.7.0                  | 
+| Resolved FW             | -                          |
+| Demo program            | d004-nucleo-h743-i2c       |
+| Control program         | d004-nucleo-g431rb-control |
+| Reported                | [ST Community](https://community.st.com/s/question/0D50X0000BoyRlfSQE/bug-report-h743-hali2ctransmitit-respond-incorrectly-when-it-receives-nak)               |
+
+#### Description
+According to HAL manner, when I2C NAK is received, the HAL_I2C_ErrorCallback() must be called immediately. But the HAL_I2C_MasterTxCpltCallback() is called several seconds after NAK received.
+
+This is wrong by two means. 
+ 1. The response is not immediate
+ 1. Wrong callback is called. 
+
+#### How to reproduce
+ 1. Clone this repository
+ 2. Import the project "d004-nucleo-h743-i2c" from git repository to the CubeIDE workspace.
+ 3. Build and run on Nucleo H743. Do not mount any I2C device.
+
+ In this hardware setup, there is no I2C device. Thus, any I2C master access cause NAK response
+(No response is interpreted as NAK on the I2C bus). If this program run correctly, we will see the
+red LED turns on by HAL_I2C_ErrorCallback(). But we will see the blue LED turn on HAL_I2C_MasterTxCpltCallback()
+because of the bug in the HAL. And ther is huge delay. 
+
+#### Consideration
+This is the bug of the I2C interrupt handler inside HAL. 
+
+#### Control program
+The project "d004-nucleo-g431rb-control" shows the expected behavior. Without any IO board, there is no I2C device. You will see the green LED is on immediately by HAL_I2C_ErrorCallback()
+
+Run this program on Nucleo G431RB.
+
+
 ### D005 STM32L1 HAL_I2C_Master_Sequential_Transmit_IT() incompatibility
 ### D006 STM32L1 HAL_EXTI wrong configuration
 

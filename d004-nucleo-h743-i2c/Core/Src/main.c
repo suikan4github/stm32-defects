@@ -62,10 +62,6 @@ static void MX_I2C1_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 uint8_t buf[1];
-const uint8_t start_message[] = "I2C TX start\n";
-
-const uint8_t complete_message[] = "I2C TX complete\n";
-const uint8_t error_message[] = "I2C ERROR\n";
 
 /*
  * Output a message when I2C interrupt is triggered.
@@ -73,14 +69,20 @@ const uint8_t error_message[] = "I2C ERROR\n";
 
 void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c)
 {
-    HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);    // turn on BLUE LED.
-    HAL_UART_Transmit(&huart3, complete_message, sizeof(complete_message), -1);
+    // Check if the interrupt is triggered from our I2C
+    if (hi2c == &hi2c1)
+        while (1)
+        {   // Comming here with NAK receive is buggy
+            HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);    // Toggle Gree LED.
+            HAL_Delay(250);
+        }
 }
 
 void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c)
 {
-    HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);    // turn on RED LED.
-    HAL_UART_Transmit(&huart3, error_message, sizeof(error_message), -1);
+    // Check if the interrupt is triggered from our I2C
+    if (hi2c == &hi2c1)
+        HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);    // turn on RED LED.
 }
 /* USER CODE END 0 */
 
@@ -135,9 +137,6 @@ int main(void)
                                0x02,
                                buf,
                                0);
-
-    // Send a message to console, right after the transmission.
-    HAL_UART_Transmit(&huart3, start_message, sizeof(start_message), -1);
 
     /* USER CODE END 2 */
 
@@ -418,18 +417,18 @@ void Error_Handler(void)
 
 #ifdef  USE_FULL_ASSERT
 /**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
+ * @brief  Reports the name of the source file and the source line number
+ *         where the assert_param error has occurred.
+ * @param  file: pointer to the source file name
+ * @param  line: assert_param error line source number
+ * @retval None
+ */
 void assert_failed(uint8_t *file, uint32_t line)
 {
-  /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
+    /* USER CODE BEGIN 6 */
+    /* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-  /* USER CODE END 6 */
+    /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
 
