@@ -30,15 +30,17 @@ This is a collection of the STM32 software bugs which is harmful to the developm
 | Resolved CubeIDE        | -             |
 | Last reproduced FW      | -             | 
 | Resolved FW             | -             |
-| Sample program          | -             |
+| Demo program            | -             |
+| Control program         | -             |
 | Reported                | ST Community  |
 
 #### Description
+In the CubeIDE output project, the default input clock frequency of the Nucleo F722ZE is wrong. It is configured as 25MHz, while it should be 8MHz. 
 
-In the CubeIDE output project, the default input clock frequency of the Nucleo F722ZE is wrong. 
+#### How to reprodcue
+Create a new Nucleo F722ZE board project from CubeIDE. By default, the HSE clock frequency is set as 25MHz. 
 
-It is configured as 25MHz, while it should be 8MHz. 
-
+#### Consideration
 This seems to be the problem of the code generator, rather than the embedded firmware. 
 
 ![Clock Configuration](img/2020-03-06_07-16.png)
