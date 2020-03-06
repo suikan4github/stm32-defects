@@ -24,24 +24,24 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-nucleo-l152-exti.elf \
+d006-nucleo-l152-exti2.elf \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-nucleo-l152-exti.list \
+d006-nucleo-l152-exti2.list \
 
 OBJCOPY_BIN += \
-nucleo-l152-exti.bin \
+d006-nucleo-l152-exti2.bin \
 
 
 # All Target
-all: nucleo-l152-exti.elf secondary-outputs
+all: d006-nucleo-l152-exti2.elf secondary-outputs
 
 # Tool invocations
-nucleo-l152-exti.elf: $(OBJS) $(USER_OBJS) /home/takemasa/STM32CubeIDE/workspace_stm32_defect/nucleo-l152-exti/STM32L152RETX_FLASH.ld
-	arm-none-eabi-gcc -o "nucleo-l152-exti.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/home/takemasa/STM32CubeIDE/workspace_stm32_defect/nucleo-l152-exti/STM32L152RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="nucleo-l152-exti.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+d006-nucleo-l152-exti2.elf: $(OBJS) $(USER_OBJS) /home/takemasa/git/stm32-defects/d006-nucleo-l152-exti2/STM32L152RETX_FLASH.ld
+	arm-none-eabi-gcc -o "d006-nucleo-l152-exti2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/home/takemasa/git/stm32-defects/d006-nucleo-l152-exti2/STM32L152RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="d006-nucleo-l152-exti2.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -50,13 +50,13 @@ default.size.stdout: $(EXECUTABLES)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-nucleo-l152-exti.list: $(EXECUTABLES)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "nucleo-l152-exti.list"
+d006-nucleo-l152-exti2.list: $(EXECUTABLES)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "d006-nucleo-l152-exti2.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-nucleo-l152-exti.bin: $(EXECUTABLES)
-	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "nucleo-l152-exti.bin"
+d006-nucleo-l152-exti2.bin: $(EXECUTABLES)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "d006-nucleo-l152-exti2.bin"
 	@echo 'Finished building: $@'
 	@echo ' '
 

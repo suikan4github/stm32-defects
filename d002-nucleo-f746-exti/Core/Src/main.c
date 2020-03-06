@@ -64,6 +64,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     if (GPIO_Pin == GPIO_PIN_13)
     {
         HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+        HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
     }
 }
 
@@ -102,12 +103,23 @@ int main(void)
     MX_USART3_UART_Init();
     /* USER CODE BEGIN 2 */
 
-    hexti_b1.Line = EXTI_LINE_13;
+    // Turn LD2(Blue) on, Turn LD3(Red) off.
+    HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET);
+
+    // Get the handle of the EXTI 13 ( B1 switch )
+    HAL_EXTI_GetHandle(&hexti_b1, EXTI_LINE_13);
+
+    // Save the configuration of the EXTI 13. This is set as  edge interrupt, by  initializer.
     HAL_EXTI_GetConfigLine(
                            &hexti_b1,
                            &hexti_b1_config
                            );
-//    HAL_EXTI_ClearConfigLine(&hexti_b1);
+
+    // Clear the EXTI 13. Interrupt is disabled.
+    HAL_EXTI_ClearConfigLine(&hexti_b1);
+
+    // Restore the EXTI13 configuration. Now, it should be  edge trigger.
     HAL_EXTI_SetConfigLine(&hexti_b1, &hexti_b1_config);
     /* USER CODE END 2 */
 
