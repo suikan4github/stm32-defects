@@ -1,8 +1,9 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    stm32g0xx_it.h
-  * @brief   This file contains the headers of the interrupt handlers.
+  * @file           : main.h
+  * @brief          : Header for main.c file.
+  *                   This file contains the common defines of the application.
   ******************************************************************************
   * @attention
   *
@@ -14,17 +15,21 @@
   * License. You may obtain a copy of the License at:
   *                        opensource.org/licenses/BSD-3-Clause
   *
- ******************************************************************************
+  ******************************************************************************
   */
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32G0xx_IT_H
-#define __STM32G0xx_IT_H
+#ifndef __MAIN_H
+#define __MAIN_H
 
 #ifdef __cplusplus
- extern "C" {
-#endif 
+extern "C" {
+#endif
+
+/* Includes ------------------------------------------------------------------*/
+#include "stm32g4xx_hal.h"
+#include "stm32g4xx_ll_pwr.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -47,20 +52,36 @@
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
-void NMI_Handler(void);
-void HardFault_Handler(void);
-void SVC_Handler(void);
-void PendSV_Handler(void);
-void SysTick_Handler(void);
-void EXTI4_15_IRQHandler(void);
+void Error_Handler(void);
+
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
+
+/* Private defines -----------------------------------------------------------*/
+#define B1_Pin GPIO_PIN_13
+#define B1_GPIO_Port GPIOC
+#define B1_EXTI_IRQn EXTI15_10_IRQn
+#define LPUART1_TX_Pin GPIO_PIN_2
+#define LPUART1_TX_GPIO_Port GPIOA
+#define LPUART1_RX_Pin GPIO_PIN_3
+#define LPUART1_RX_GPIO_Port GPIOA
+#define LD2_Pin GPIO_PIN_5
+#define LD2_GPIO_Port GPIOA
+#define T_SWDIO_Pin GPIO_PIN_13
+#define T_SWDIO_GPIO_Port GPIOA
+#define T_SWCLK_Pin GPIO_PIN_14
+#define T_SWCLK_GPIO_Port GPIOA
+#define T_SWO_Pin GPIO_PIN_3
+#define T_SWO_GPIO_Port GPIOB
+/* USER CODE BEGIN Private defines */
+
+/* USER CODE END Private defines */
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __STM32G0xx_IT_H */
+#endif /* __MAIN_H */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

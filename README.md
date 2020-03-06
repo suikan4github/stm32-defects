@@ -99,6 +99,46 @@ The project "d002-nucleo-g431rb-control" shows the expected behavior. This progr
 Run this program on Nucleo G431RB.
 
 ### D003 STM32G0 HAL_GPIO_EXTI_Callback() incompatibility
+| Item                    | Description                |
+| ----------------------- | -------------------------- |
+| Affected device         | STM32G0                    |
+| Last reproduced CubeIDE | -                          | 
+| Resolved CubeIDE        | -                          |
+| Last reproduced FW      | G0 v1.3.0                  | 
+| Resolved FW             | -                          |
+| Demo program            | d003-nucleo-g070-gpio-exti |
+| Control program         | d003-nucleo-g431rb-control |
+| Reported                | ST Community               |
+
+#### Description
+The HAL_GPIO_EXTI_Callback() is not called while EXTI interrupt is accepted. 
+
+#### How to reproduce
+ 1. Clone this repository
+ 2. Import the project "d003-nucleo-g070-exti" from git repository to the CubeIDE workspace.
+ 3. Build and run on Nucleo G070
+
+ If the program runs correctly, the green LED brinks for each time the switch B1 is pushed. 
+
+#### Consideration
+For the STM32G0, ST changed call back specification as imcompatible manner with other series. Thus, the HAL_GPIO_EXTI_Callback() is not called anymore. This is bad way to implement a Hardware "Abstraction" Layer. 
+
+```
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+    if (GPIO_Pin == GPIO_PIN_13)
+    {
+        // Toggle LD2 (Green)
+        HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+    }
+}
+```
+
+#### Control program
+The project "d003-nucleo-g431rb-control" shows the expected behavior. For each time pushing the swtich B1, the green LED blinks. While the demo program fails, this control program works as expected. The LED2 toggles only when the switch B1 is pushed. 
+
+Run this program on Nucleo G431RB.
+
 ### D004 STM32H7 HAL_I2C_Master_Transmit_IT() runtime bug
 ### D005 STM32L1 HAL_I2C_Master_Sequential_Transmit_IT() incompatibility
 ### D006 STM32L1 HAL_EXTI wrong configuration

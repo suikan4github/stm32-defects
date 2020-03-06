@@ -1,21 +1,21 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file           : main.c
+ * @brief          : Main program body
+ ******************************************************************************
+ * @attention
+ *
+ * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+ * All rights reserved.</center></h2>
+ *
+ * This software component is licensed by ST under BSD 3-Clause license,
+ * the "License"; You may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at:
+ *                        opensource.org/licenses/BSD-3-Clause
+ *
+ ******************************************************************************
+ */
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
@@ -57,6 +57,14 @@ static void MX_USART2_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+    if (GPIO_Pin == GPIO_PIN_13)
+    {
+        // Toggle LD2 (Green)
+        HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+    }
+}
 
 /* USER CODE END 0 */
 
@@ -95,12 +103,12 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
+    while (1)
+    {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-  }
+    }
   /* USER CODE END 3 */
 }
 
@@ -213,14 +221,24 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin : LED_GREEN_Pin */
-  GPIO_InitStruct.Pin = LED_GREEN_Pin;
+  /*Configure GPIO pin : B1_Pin */
+  GPIO_InitStruct.Pin = B1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : LD2_Pin */
+  GPIO_InitStruct.Pin = LD2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(LED_GREEN_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI4_15_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI4_15_IRQn);
 
 }
 
@@ -235,7 +253,7 @@ static void MX_GPIO_Init(void)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
+    /* User can add his own implementation to report the HAL error return state */
 
   /* USER CODE END Error_Handler_Debug */
 }
@@ -251,7 +269,7 @@ void Error_Handler(void)
 void assert_failed(uint8_t *file, uint32_t line)
 { 
   /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
+    /* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
 }
