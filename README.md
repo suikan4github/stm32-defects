@@ -71,7 +71,7 @@ The HAL_EXTI_SetConfigLine() generates interrupt infinitely, after setting the r
 ### Consideration
 At the initial state, only LED2( Blue )is turned on. And both LED2 and LED3 ( Blue and Red ) are toggled in the EXTI interrupt call back. Thus, we are watching EXTI13 interrupt is accepted continuously. This is not expected behavior. 
 
-In the main routine, saved EXTI 13 ( interrupt of the Switch B1 ) interrupt configuration, reset it, and then, re-store the EXTI 13 configuration. This must just enable the edge trigger interrupt. In case of correct implementation, this program goggles LED2 and LED3 only when B1 is pushed. 
+In the main routine, program saves EXTI 13 ( interrupt of the Switch B1 ) interrupt configuration, reset it, and then, re-store the EXTI 13 configuration. This must just enable the edge trigger interrupt. In case of correct implementation, this program toggles LED2 and LED3 only when B1 is pushed. 
 
 ```
     HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
