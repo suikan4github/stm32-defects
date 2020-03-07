@@ -56,7 +56,7 @@ This seems to be the problem of the code generator, rather than the embedded fir
 | Resolved FW             | -                          |
 | Demo program            | d002-nucleo-f746-exti      |
 | Control program         | d002-nucleo-g431rb-control |
-| Reported                | ST Community               |
+| Reported                | [ST Community](https://community.st.com/s/question/0D50X0000CErIa2SQF/stm32f7-halextisetconfigline-configures-exti-incorrectly)               |
 
 ### Description
 The HAL_EXTI_SetConfigLine() generates interrupt infinitely, after setting the retrieved configuration data. This is strange behavior. 
