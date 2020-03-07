@@ -62,8 +62,8 @@ The HAL_EXTI_SetConfigLine() generates interrupt infinitely, after setting the r
 
 ### How to reproduce
  1. Clone this repository
- 2. Import the project "d002-nucleo-f746-exti" from git repository to the CubeIDE workspace.
- 3. Build and run on NucleoF746ZG
+2. Import the project demo program ( see above table ) from git repository to the CubeIDE workspace.
+  3. Build and run on NucleoF746ZG
 
  If the program runs correctly, only the LED2( Blue turn on). But we can see both LED2 and 3 ( Blue and Red) turn on. 
 
@@ -115,8 +115,8 @@ The HAL_GPIO_EXTI_Callback() is not called while EXTI interrupt is accepted.
 
 ### How to reproduce
  1. Clone this repository
- 2. Import the project "d003-nucleo-g070-exti" from git repository to the CubeIDE workspace.
- 3. Build and run on Nucleo G070
+2. Import the project demo program ( see above table ) from git repository to the CubeIDE workspace.
+  3. Build and run on Nucleo G070
 
  If the program runs correctly, the green LED brinks for each time the switch B1 is pushed. 
 
@@ -156,7 +156,7 @@ According to HAL manner, when I2C NAK is received, the HAL_I2C_ErrorCallback() m
 
 ### How to reproduce
  1. Clone this repository
- 2. Import the project "d004-nucleo-h743-i2c" from git repository to the CubeIDE workspace.
+ 2. Import the project demo program ( see above table ) from git repository to the CubeIDE workspace.
  3. Build and run on Nucleo H743. Do not mount any I2C device.
 
  In this hardware setup, there is no I2C device. Thus, any I2C master access cause NAK response
@@ -189,8 +189,8 @@ Calling HAL_I2C_Master_Sequential_Transmit_IT() causes build error.
 
 ### How to reproduce
  1. Clone this repository
- 2. Import the project "d002-nucleo-f746-exti" from git repository to the CubeIDE workspace.
- 3. Build this project. 
+ 2. Import the project demo program ( see above table ) from git repository to the CubeIDE workspace.
+ 3. Build that project. 
 
 The HAL_I2C_Master_Sequential_Transmit_IT() is on the HAL manual. But causes compile error. 
 
@@ -201,6 +201,32 @@ This is bug in the HAL. The expected functionality is given by HAL_I2C_Master_Se
 The project "d005-nucleo-g431rb-control" shows the expected behavior. Building this program shows no error. 
 
 ## D006 STM32L1 HAL_EXTI wrong configuration
+| Item                    | Description                |
+| ----------------------- | -------------------------- |
+| Affected device         | STM32L1                    |
+| Last reproduced CubeIDE | -                          | 
+| Resolved CubeIDE        | -                          |
+| Last reproduced FW      | L1 v1.9.0                  | 
+| Resolved FW             | -                          |
+| Demo program            | d006-nucleo-l152-i2c       |
+| Control program         | d006-nucleo-g431rb-control |
+| Reported                | [ST Community](https://community.st.com/s/question/0D50X0000CCp1QdSQJ/cubeide-doesnt-generate-halexti-for-stm32l152)               |
+
+### Description
+Using any resources of EXTI causes compile errors. 
+
+### How to reproduce
+ 1. Clone this repository
+ 2. Import the project demo program ( see above table ) from git repository to the CubeIDE workspace.
+ 3. Build that project. 
+
+The HAL_I2C_Master_Sequential_Transmit_IT() is on the HAL manual. But causes compile error. 
+
+### Consideration
+For any configuration, CubeIDE generates the HAL_EXTI module for all STM32 series. But for the SLT32L1 series, the HAL_EXTI module is not generated. 
+
+### Control program
+The control program ( See above table ) can be compiled without error. 
 
 ## Resolved
 
