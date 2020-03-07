@@ -4,6 +4,8 @@ Record of the modification in project development.
 ## [Unreleased]
 
 ### Added
+ - [Issue 2 :Add link to D002](https://github.com/suikan4github/stm32-defects/issues/2)
+
 ### Changed
 ### Deprecated
 ### Removed
