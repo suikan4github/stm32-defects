@@ -10,6 +10,7 @@ A list of the known STM32 HAL defects
     - [D004 STM32H7 HAL_I2C_Master_Transmit_IT() NAK response is slow](#d004-stm32h7-hal_i2c_master_transmit_it-nak-response-is-slow)
     - [D005 STM32L1 HAL_I2C_Master_Sequential_Transmit_IT() incompatibility](#d005-stm32l1-hal_i2c_master_sequential_transmit_it-incompatibility)
     - [D006 STM32L1 HAL_EXTI wrong configuration](#d006-stm32l1-hal_exti-wrong-configuration)
+    - [D007 STM32H7 cannot use DMA with Duplex I2S mode](#d007-stm32h7-cannot-use-dma-with-duplex-i2s-mode)
     - [Resolved](#resolved)
     - [Author](#author)
     - [License](#license)
@@ -227,6 +228,33 @@ For any configuration, CubeIDE generates the HAL_EXTI module for all STM32 serie
 
 ### Control program
 The control program ( See above table ) can be compiled without error. 
+
+## D007 STM32H7 cannot use DMA with Duplex I2S mode
+| Item                    | Description   |
+| ----------------------- | ------------- |
+| Affected device         | STM32H        |
+| Last reproduced CubeIDE | 1.3.0         | 
+| Resolved CubeIDE        | -             |
+| Last reproduced FW      | H7 v1.7.0     | 
+| Resolved FW             | -             |
+| Demo program            | -             |
+| Control program         | -             |
+| Reported                |               |
+
+### Description
+The Duplex I2S mode of the STM32H7 cannot utilize the DMA for both TX and RX in parallel. As a result, DMA transfer is not be able to use in Duplex I2S. 
+
+### How to reproduce
+ 1. Create a new Nucleo H743ZI project
+ 1. Set I2S1 as Duplex Master
+ 1. Add DMA to I2S1. 
+
+Only 1 DMA can be added. 
+
+### Consideration
+This seems to be an intended limitation. In the ST community, [an employee says they are aware of this limitation](https://community.st.com/s/question/0D50X0000CAtFMtSQN/stm32h7-duplex-i2s-cannot-txrx-simultaneously-through-the-hal). 
+
+Let's stay tuned. 
 
 ## Resolved
 
