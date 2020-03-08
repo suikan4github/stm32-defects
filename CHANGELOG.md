@@ -40,6 +40,6 @@ First release to master branch.
 ### Security
 
 [Unreleased]: https://github.com/suikan4github/murasaki_samples/compare/v0.1.2...develop
-[0.1.1]: https://github.com/suikan4github/murasaki_samples/compare/v0.1.1...v0.1.2
+[0.1.2]: https://github.com/suikan4github/murasaki_samples/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/suikan4github/murasaki_samples/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/suikan4github/murasaki_samples/compare/v0.0.0...v0.1.0
