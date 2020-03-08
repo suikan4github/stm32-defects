@@ -171,6 +171,7 @@ The root cause was too week default configuration of the I2C port by CubeIDE. Th
 | -------- | -----------------|
 | F722     | Very Hight       |
 | H734     | Low              | 
+
 Changing the value from Low to High could solve this problem. This is already reported to ST community. Hopefully, they change the default value. 
 
 ### Control program
