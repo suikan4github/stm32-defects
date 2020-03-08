@@ -12,9 +12,10 @@ Record of the modification in project development.
 
 ## [0.1.1] - 2020-03-07
 ### Added
- - [Issue 2 :Add link to D002](https://github.com/suikan4github/stm32-defects/issues/2)
-
 ### Changed
+ - [Issue 2 : Add link to D002](https://github.com/suikan4github/stm32-defects/issues/2)
+ - [Issue 5 : Add D004 root cause consideration](https://github.com/suikan4github/stm32-defects/issues/5)
+
 ### Deprecated
 ### Removed
 ### Fixed
