@@ -166,7 +166,12 @@ According to HAL manner, when I2C NAK is received, the HAL_I2C_ErrorCallback() m
 Note that the target I2C device address of the demo program is 1. Connecting any I2C device except address == 1 shows same result. 
 
 ### Consideration
-This is a bug of the I2C interrupt handler inside HAL. 
+The root cause was too week default configuration of the I2C port by CubeIDE. The configuration of the Max Output Speed is as following : 
+| Nucleo   | Max Output Speed |
+| -------- | -----------------|
+| F722     | Very Hight       |
+| H734     | Low              | 
+Changing the value from Low to High could solve this problem. This is already reported to ST community. Hopefully, they change the default value. 
 
 ### Control program
 The project "d004-nucleo-g431rb-control" shows the expected behavior. Without any IO board, there is no I2C device. You will see the green LED is on immediately by HAL_I2C_ErrorCallback()
