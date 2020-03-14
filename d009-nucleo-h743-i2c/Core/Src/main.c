@@ -125,6 +125,7 @@ int main(void)
     MX_USB_OTG_FS_PCD_Init();
     /* USER CODE BEGIN 2 */
 
+    HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET);
 #ifdef HAL_I2C_MODULE_ENABLED
     // In this project, we don enable I2C by CubeIDE configurator.
     // So, if the following code is executed, project is incorrectly configured.
